@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Noodle Theory — Bang Chak, Bangkok</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+Thai:wght@300;400;600&family=Sarabun:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet"/>
+<style>
+/* ─── RESET & BASE ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+:root {
+  --red:        #C8180A;
+  --red-dark:   #8F0E04;
+  --red-light:  #F5E8E7;
+  --yellow:     #F5C518;
+  --yellow-dim: #D9A800;
+  --yellow-pale:#FFF8D6;
+  --ink:        #1A0A00;
+  --ink-mid:    #4A2800;
+  --ink-soft:   #7A5C40;
+  --cream:      #FDF8F0;
+  --white:      #FFFFFF;
+  --border:     rgba(200,24,10,0.12);
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'Sarabun', 'Noto Sans Thai', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ─── UTILITY ─── */
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.tag-label {
+  display: inline-block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  color: var(--red);
+  border: 1px solid var(--red);
+  padding: 4px 14px;
+  border-radius: 2px;
+  margin-bottom: 1rem;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 200;
+  background: rgba(26,10,0,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid var(--yellow);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 62px; padding: 0 28px;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  color: var(--yellow);
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  line-height: 1;
+}
+.nav-logo span { color: var(--white); font-size: 0.55rem; display: block; letter-spacing: 0.22em; text-transform: uppercase; font-family: var(--font-body); font-weight: 300; margin-top: 2px; }
+.nav-links {
+  display: flex; gap: 32px; list-style: none;
+}
+.nav-links a {
+  text-decoration: none; color: rgba(255,255,255,0.7);
+  font-size: 0.82rem; font-weight: 400; letter-spacing: 0.06em;
+  text-transform: uppercase; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--yellow); }
+.nav-cta {
+  background: var(--yellow); color: var(--ink);
+  border: none; padding: 9px 22px; border-radius: 2px;
+  font-family: var(--font-body); font-size: 0.82rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  text-decoration: none; display: inline-block;
+}
+.nav-cta:hover { background: var(--yellow-dim); transform: translateY(-1px); }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--yellow); border-radius: 2px; transition: all 0.3s; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  background: var(--ink);
+  position: relative;
+  display: flex; align-items: center;
+  overflow: hidden;
+  padding-top: 62px;
+}
+
+/* diagonal stripe pattern */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 38px,
+    rgba(245,197,24,0.04) 38px,
+    rgba(245,197,24,0.04) 40px
+  );
+  z-index: 0;
+}
+
+/* big red accent block */
+.hero-red-block {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 46%;
+  background: var(--red);
+  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
+  z-index: 1;
+}
+.hero-red-block::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 20px,
+    rgba(0,0,0,0.07) 20px,
+    rgba(0,0,0,0.07) 21px
+  );
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 1100px; margin: 0 auto;
+  padding: 0 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+  min-height: calc(100vh - 62px);
+}
+
+.hero-left { padding: 60px 0; }
+
+.hero-featured {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(245,197,24,0.12);
+  border: 1px solid rgba(245,197,24,0.3);
+  border-radius: 2px; padding: 6px 14px;
+  margin-bottom: 28px;
+}
+.hero-featured-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1; transform:scale(1)} 50%{opacity:0.5; transform:scale(1.4)} }
+.hero-featured span { font-size: 0.75rem; color: var(--yellow); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 7vw, 6rem);
+  line-height: 0.95;
+  color: var(--white);
+  margin-bottom: 20px;
+  letter-spacing: 0.02em;
+}
+.hero h1 .line-yellow { color: var(--yellow); display: block; }
+.hero h1 .line-thin {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.04em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.hero-desc {
+  font-size: 1.02rem; color: rgba(255,255,255,0.6);
+  font-weight: 300; line-height: 1.8;
+  max-width: 400px; margin-bottom: 36px;
+}
+
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.btn-primary {
+  background: var(--yellow); color: var(--ink);
+  border: none; padding: 14px 32px; border-radius: 2px;
+  font-family: var(--font-body); font-size: 0.9rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer;
+  transition: all 0.2s; text-decoration: none; display: inline-block;
+}
+.btn-primary:hover { background: var(--yellow-dim); transform: translateY(-2px); }
+.btn-ghost {
+  background: transparent; color: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.25); padding: 13px 28px; border-radius: 2px;
+  font-family: var(--font-body); font-size: 0.9rem; font-weight: 400;
+  text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer;
+  transition: all 0.2s; text-decoration: none; display: inline-block;
+}
+.btn-ghost:hover { border-color: var(--yellow); color: var(--yellow); }
+
+.hero-right {
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  padding: 60px 0 60px 40px;
+}
+
+.hero-stats {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  width: 100%;
+}
+.hero-stat {
+  background: rgba(0,0,0,0.25);
+  padding: 24px 20px;
+}
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 2.6rem; color: var(--yellow);
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: 0.78rem; color: rgba(255,255,255,0.5);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-top: 4px; font-weight: 400;
+}
+
+.hero-press {
+  margin-top: 2px; background: rgba(0,0,0,0.18);
+  padding: 20px; width: 100%;
+}
+.hero-press-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+.hero-press-name { font-size: 1rem; color: var(--white); font-weight: 600; }
+.hero-press-sub { font-size: 0.82rem; color: rgba(255,255,255,0.5); font-weight: 300; font-style: italic; margin-top: 2px; }
+
+/* ─── DIVIDER ─── */
+.divider-bar {
+  background: var(--yellow);
+  height: 5px; width: 100%;
+}
+
+/* ─── MENU ─── */
+.menu-section {
+  padding: 90px 0;
+  background: var(--cream);
+}
+.menu-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 50px; flex-wrap: wrap; gap: 16px;
+}
+.menu-header-left h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  color: var(--ink); letter-spacing: 0.03em; line-height: 1;
+}
+.menu-header-left h2 span { color: var(--red); }
+.menu-header-right {
+  font-size: 0.85rem; color: var(--ink-soft);
+  font-weight: 300; max-width: 280px; text-align: right;
+  line-height: 1.7;
+}
+
+/* category tabs */
+.menu-tabs {
+  display: flex; gap: 0; margin-bottom: 40px;
+  border-bottom: 2px solid var(--border);
+}
+.menu-tab {
+  padding: 10px 24px; border: none; background: none; cursor: pointer;
+  font-family: var(--font-body); font-size: 0.85rem; font-weight: 600;
+  color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em;
+  border-bottom: 3px solid transparent; margin-bottom: -2px;
+  transition: all 0.2s;
+}
+.menu-tab.active { color: var(--red); border-bottom-color: var(--red); }
+.menu-tab:hover:not(.active) { color: var(--ink); }
+
+/* menu grid */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 2px;
+}
+
+.menu-item {
+  background: var(--white);
+  padding: 22px 24px;
+  border-left: 3px solid transparent;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.menu-item::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--red);
+  transform: scaleY(0); transform-origin: bottom;
+  transition: transform 0.25s ease;
+}
+.menu-item:hover::before { transform: scaleY(1); }
+.menu-item:hover { background: #FFFBF0; }
+
+.menu-item-info { flex: 1; min-width: 0; }
+.menu-item-thai {
+  font-size: 1.05rem; font-weight: 600; color: var(--ink);
+  line-height: 1.3; margin-bottom: 2px;
+  font-family: 'Noto Sans Thai', sans-serif;
+}
+.menu-item-eng {
+  font-size: 0.82rem; color: var(--ink-soft);
+  font-weight: 300; font-style: italic; margin-bottom: 6px;
+}
+.menu-item-desc {
+  font-size: 0.8rem; color: var(--ink-soft);
+  font-weight: 300; line-height: 1.55;
+}
+.menu-item-badge {
+  display: inline-block; font-size: 0.65rem; text-transform: uppercase;
+  letter-spacing: 0.1em; padding: 2px 8px; border-radius: 1px;
+  margin-top: 7px; font-weight: 600;
+}
+.badge-popular { background: var(--red-light); color: var(--red); }
+.badge-spicy { background: #FFF0E0; color: #D04000; }
+.badge-veg { background: #E8F5E9; color: #2E7D32; }
+.badge-new { background: var(--yellow-pale); color: var(--ink); }
+
+.menu-item-price {
+  font-family: var(--font-display);
+  font-size: 1.55rem; color: var(--red);
+  white-space: nowrap; flex-shrink: 0;
+  line-height: 1;
+  padding-top: 4px;
+}
+.menu-item-price small {
+  font-family: var(--font-body);
+  font-size: 0.7rem; font-weight: 400;
+  color: var(--ink-soft); display: block;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+/* price variants */
+.price-variants { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.price-variant { font-size: 0.75rem; color: var(--ink-soft); font-weight: 300; }
+.price-main { font-family: var(--font-display); font-size: 1.55rem; color: var(--red); line-height: 1; }
+
+/* ─── PRESS BANNER ─── */
+.press-banner {
+  background: var(--red);
+  padding: 48px 0;
+  overflow: hidden;
+}
+.press-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  align-items: center;
+}
+.press-quote-block { padding: 0 48px 0 0; border-right: 1px solid rgba(255,255,255,0.2); }
+.press-mark {
+  font-family: var(--font-display);
+  font-size: 5rem; color: var(--yellow);
+  line-height: 0.6; margin-bottom: 16px; display: block;
+}
+.press-quote {
+  font-size: 1.15rem; color: var(--white);
+  font-weight: 300; font-style: italic;
+  line-height: 1.75; margin-bottom: 16px;
+}
+.press-attribution { font-size: 0.8rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.1em; }
+.press-attribution strong { color: var(--yellow); }
+
+.press-info { padding: 0 0 0 48px; }
+.press-info-title { font-family: var(--font-display); font-size: 2rem; color: var(--yellow); margin-bottom: 16px; letter-spacing: 0.04em; }
+.press-info-list { list-style: none; }
+.press-info-list li {
+  font-size: 0.9rem; color: rgba(255,255,255,0.7);
+  padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-weight: 300; display: flex; align-items: center; gap: 10px;
+}
+.press-info-list li:last-child { border-bottom: none; }
+.press-info-list li::before {
+  content: ''; display: block; width: 6px; height: 6px;
+  background: var(--yellow); border-radius: 50%; flex-shrink: 0;
+}
+
+/* ─── LOCATION ─── */
+.location-section { padding: 90px 0; background: var(--ink); }
+.location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; }
+
+.location-info { padding: 48px 56px 48px 0; }
+.location-info .tag-label { border-color: var(--yellow); color: var(--yellow); }
+.location-info h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--white); letter-spacing: 0.03em;
+  margin-bottom: 32px; line-height: 1;
+}
+.location-info h2 span { color: var(--yellow); }
+
+.info-block { margin-bottom: 28px; }
+.info-block-label {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.35); font-weight: 600; margin-bottom: 6px;
+}
+.info-block-value { font-size: 1rem; color: rgba(255,255,255,0.85); font-weight: 400; line-height: 1.6; }
+.info-block-value a { color: var(--yellow); text-decoration: none; }
+.info-block-value a:hover { text-decoration: underline; }
+
+.hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.hours-row { font-size: 0.88rem; color: rgba(255,255,255,0.6); font-weight: 300; }
+.hours-row strong { color: rgba(255,255,255,0.85); font-weight: 600; }
+
+.location-map {
+  position: relative;
+  background: #222;
+  overflow: hidden;
+  min-height: 420px;
+}
+.location-map iframe {
+  width: 100%; height: 100%; border: none; display: block;
+  filter: grayscale(30%) contrast(1.05);
+  min-height: 420px;
+}
+.map-overlay-tag {
+  position: absolute; top: 20px; left: 20px;
+  background: var(--red);
+  color: var(--white); padding: 8px 16px; border-radius: 2px;
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; z-index: 5;
+}
+
+/* ─── CTA ─── */
+.cta-section {
+  padding: 90px 0;
+  background: var(--yellow);
+  position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: 'NOODLE THEORY';
+  position: absolute; right: -40px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: 9rem; color: rgba(0,0,0,0.06);
+  white-space: nowrap; pointer-events: none;
+  letter-spacing: 0.04em;
+}
+.cta-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 40px; flex-wrap: wrap; position: relative; z-index: 1;
+}
+.cta-text h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  color: var(--ink); line-height: 0.95; letter-spacing: 0.03em;
+  margin-bottom: 12px;
+}
+.cta-text p {
+  font-size: 0.95rem; color: var(--ink-mid);
+  font-weight: 300; line-height: 1.7;
+  max-width: 400px;
+}
+.cta-right { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.btn-order {
+  background: var(--red); color: var(--white);
+  border: none; padding: 16px 40px; border-radius: 2px;
+  font-family: var(--font-body); font-size: 1rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em; cursor: pointer;
+  transition: all 0.2s; text-decoration: none; display: inline-block;
+}
+.btn-order:hover { background: var(--red-dark); transform: translateY(-2px); }
+.cta-phone {
+  display: flex; align-items: center; gap: 10px;
+}
+.cta-phone-icon { width: 32px; height: 32px; background: rgba(0,0,0,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.cta-phone-icon svg { width: 15px; height: 15px; fill: var(--ink); }
+.cta-phone-text { font-size: 0.82rem; color: var(--ink-mid); }
+.cta-phone-text strong { font-size: 1.05rem; color: var(--ink); display: block; font-weight: 600; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: #0E0600;
+  padding: 40px 28px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  gap: 20px;
+}
+.footer-logo { font-family: var(--font-display); font-size: 1.5rem; color: var(--yellow); letter-spacing: 0.06em; }
+.footer-logo small { display: block; font-family: var(--font-body); font-size: 0.65rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 400; margin-top: 2px; }
+.footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.25); font-weight: 300; text-align: right; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+.fade-up { opacity: 0; animation: fadeUp 0.65s ease forwards; }
+.fade-up.d1 { animation-delay: 0.1s; }
+.fade-up.d2 { animation-delay: 0.25s; }
+.fade-up.d3 { animation-delay: 0.4s; }
+.fade-up.d4 { animation-delay: 0.55s; }
+
+/* ─── MOBILE ─── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-cta.desktop { display: none; }
+  .hamburger { display: flex; }
+
+  .mobile-menu {
+    display: none; position: fixed; top: 62px; left: 0; right: 0;
+    background: var(--ink); z-index: 199; padding: 20px 28px;
+    border-bottom: 2px solid var(--yellow);
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
+  .mobile-menu a {
+    display: block; padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.8); text-decoration: none;
+    font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .mobile-menu .mob-cta {
+    display: block; margin-top: 16px; text-align: center;
+    background: var(--yellow); color: var(--ink); padding: 13px;
+    border-radius: 2px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  .hero-content { grid-template-columns: 1fr; gap: 0; min-height: auto; padding: 40px 0 0; }
+  .hero-red-block { display: none; }
+  .hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 200px; background: var(--red);
+    clip-path: polygon(0 60%, 100% 0, 100% 100%, 0 100%);
+  }
+  .hero-left { padding: 40px 0 24px; }
+  .hero-right { padding: 24px 0 220px; }
+  .hero-stats { grid-template-columns: 1fr 1fr; }
+  .hero-stat { background: rgba(255,255,255,0.06); }
+  .hero-stat-num { font-size: 2rem; }
+  .hero-press { background: rgba(255,255,255,0.04); }
+
+  .menu-header { flex-direction: column; align-items: flex-start; }
+  .menu-header-right { text-align: left; max-width: 100%; }
+  .menu-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .menu-grid { grid-template-columns: 1fr; }
+
+  .press-inner { grid-template-columns: 1fr; }
+  .press-quote-block { padding: 0 0 32px 0; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 32px; }
+  .press-info { padding: 0; }
+
+  .location-grid { grid-template-columns: 1fr; }
+  .location-info { padding: 48px 0 40px; }
+  .location-map { min-height: 300px; }
+  .location-map iframe { min-height: 300px; }
+
+  .cta-inner { flex-direction: column; align-items: flex-start; }
+  .cta-section::before { font-size: 5rem; }
+
+  footer { flex-direction: column; text-align: center; }
+  .footer-copy { text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 2.6rem; }
+  .hours-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      Noodle Theory
+      <span>Bang Chak · Bangkok</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#location">Find Us</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="tel:063325451" class="nav-cta desktop">Order Now</a>
+    <div class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#menu" onclick="closeMobile()">Menu</a></li>
+    <li><a href="#location" onclick="closeMobile()">Find Us</a></li>
+    <li><a href="#contact" onclick="closeMobile()">Contact</a></li>
+  </ul>
+  <a href="tel:063325451" class="mob-cta">Order Now — 063 325 451</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-red-block"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-featured fade-up d1">
+        <div class="hero-featured-dot"></div>
+        <span>As featured on Bangkok Food Blog</span>
+      </div>
+
+      <h1 class="fade-up d2">
+        <span class="line-thin">Bang Chak's everyone's choice —</span>
+        REAL<br>
+        <span class="line-yellow">NOODLES.</span>
+        REAL<br>SOUL.
+      </h1>
+
+      <p class="hero-desc fade-up d3">
+        Hole-in-the-wall ramen done right. Hand-crafted broths, Thai recipes you can't find anywhere else — served since day one at Sukhumvit 60/1.
+      </p>
+
+      <div class="hero-actions fade-up d4">
+        <a href="#menu" class="btn-primary">View Full Menu</a>
+        <a href="#location" class="btn-ghost">Get Directions</a>
+      </div>
+    </div>
+
+    <div class="hero-right fade-up d3">
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">6AM</div>
+          <div class="hero-stat-label">Opens daily</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">11PM</div>
+          <div class="hero-stat-label">Last order</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">8+</div>
+          <div class="hero-stat-label">Noodle varieties</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">55฿</div>
+          <div class="hero-stat-label">Starting price</div>
+        </div>
+      </div>
+      <div class="hero-press">
+        <div class="hero-press-label">Featured in</div>
+        <div class="hero-press-name">Bangkok Local Food Blog</div>
+        <div class="hero-press-sub">"The most authentic Thai noodles in Phra Khanong"</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider-bar"></div>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="container">
+    <div class="menu-header">
+      <div class="menu-header-left">
+        <div class="tag-label">Our Menu</div>
+        <h2>THE<br><span>BOWLS</span></h2>
+      </div>
+      <div class="menu-header-right">
+        All broths are made fresh daily. Thai recipes passed down through the kitchen — nothing from a packet, nothing pre-made.
+      </div>
+    </div>
+
+    <div class="menu-tabs">
+      <button class="menu-tab active">Noodle Soups</button>
+      <button class="menu-tab">Dry Noodles</button>
+      <button class="menu-tab">Sides & Rice</button>
+    </div>
+
+    <div class="menu-grid" id="menuGrid">
+
+      <!-- Boat Noodles -->
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-thai">ก๋วยเตี๋ยวเรือ</div>
+          <div class="menu-item-eng">Boat Noodles</div>
+          <div class="menu-item-desc">Dark, rich pork or beef broth with herbs, blood tofu, and crispy pork rinds. A Bangkok classic.</div>
+          <span class="menu-item-badge badge-popular">Most Popular</span>
+        </div>
+        <div class="menu-item-price">55<small>THB</small></div>
+      </div>
+
+      <!-- Tom Yum Noodles -->
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-thai">ก๋วยเตี๋ยวต้มยำ</div>
+          <div class="menu-item-eng">Tom Yum Noodles</div>
+          <div class="menu-item-desc">Spicy & sour lemongrass broth, galangal, kaffir lime, and your choice of meat.</div>
+          <span class="menu-item-badge badge-spicy">Spicy</span>
+        </div>
+        <div class="menu-item-price">75<small>THB</small></div>
+      </div>
+
+      <!-- Yentafo -->
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-thai">เย็นตาโฟ</div>
+          <div class="menu-item-eng">Yentafo — Pink Noodle Soup</div>
+          <div class="menu-item-desc">Distinctly pink fermented tofu broth, fish balls, squid, and fried tofu puffs.</div>
+          <span class="menu-item-badge badge-new">House Special</span>
+        </div>
+        <div class="menu-item-price">50<small>THB</small></div>
+      </div>
+
+      <!-- Khao Soi -->
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-thai">ข้าวซอย</div>
+          <div class="menu-item-eng">Khao Soi</div>
+          <div class="menu-item-desc">Northern Thai curry noodle soup. Creamy coconut milk broth, crispy noodles on top, pickled mustard greens on the side.</div>
+          <span class="menu-item-badge badge-popular">Fan Favourite</span>
+        </div>
+        <div class="menu-item-price">75<small>THB</small></div>
+      </div>
+
+      <!-- Pad Thai -->
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-thai">ผัดไทย</div>
+          <div class="menu-item-eng">Pad Thai</div>
+          <div class="menu-item-desc">Wok-fried flat rice noodles with egg, bean sprouts, spring onion, and ground peanuts. Classic version with shrimp or tofu.</div>
+          <span class="menu-item-badge badge-veg">Can be Vegan</span>
+        </div>
+        <div class="menu-item-price">55<small>THB</small></div>
+      </div>
+
+      <!-- Dry Noodles -->
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-thai">บะหมี่แห้ง</div>
+          <div class="menu-item-eng">Dry Egg Noodles</div>
+          <div class="menu-item-desc">Tossed egg noodles with seasoned sauce, pork mince, crispy lard, and spring onion. Served with a small clear broth on the side.</div>
+        </div>
+        <div class="menu-item-price">55<small>THB</small></div>
+      </div>
+
+      <!-- Fried Chicken Wings -->
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-thai">ปีกไก่ทอด</div>
+          <div class="menu-item-eng">Fried Chicken Wings</div>
+          <div class="menu-item-desc">Golden-fried wings marinated in Thai herbs. Crispy outside, juicy inside. Perfect with any bowl.</div>
+          <span class="menu-item-badge badge-popular">Add-on Favourite</span>
+        </div>
+        <div class="menu-item-price">100<small>THB</small></div>
+      </div>
+
+      <!-- Fried Rice -->
+      <div class="menu-item">
+        <div class="menu-item-info">
+          <div class="menu-item-thai">ข้าวผัด หมู / ไก่</div>
+          <div class="menu-item-eng">Fried Rice — Pork or Chicken</div>
+          <div class="menu-item-desc">Jasmine rice wok-fried with egg, seasonal vegetables, fish sauce, and your choice of pork or chicken. Served with cucumber and lime.</div>
+        </div>
+        <div class="price-variants">
+          <div class="price-variant">Small</div>
+          <div class="price-main">135<small style="font-family:var(--font-body);font-size:0.65rem;color:var(--ink-soft);display:inline;font-weight:400;">฿</small></div>
+          <div class="price-variant" style="margin-top:6px;">Large</div>
+          <div class="price-main">250<small style="font-family:var(--font-body);font-size:0.65rem;color:var(--ink-soft);display:inline;font-weight:400;">฿</small></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRESS BANNER -->
+<section class="press-banner">
+  <div class="container">
+    <div class="press-inner">
+      <div class="press-quote-block">
+        <span class="press-mark">"</span>
+        <p class="press-quote">Noodle Theory is the kind of place Bangkok needs more of — unfussy, honest, and absolutely delicious. Their boat noodles alone are worth the trip to Bang Chak.</p>
+        <div class="press-attribution"><strong>Bangkok Local Food Blog</strong> — 2024 Featured Restaurant</div>
+      </div>
+      <div class="press-info">
+        <div class="press-info-title">Why people keep coming back</div>
+        <ul class="press-info-list">
+          <li>Broths made fresh from scratch every single day</li>
+          <li>Real Thai recipes — nothing westernised or watered down</li>
+          <li>Open early for breakfast, late for dinner — 6AM to 11PM</li>
+          <li>Neighbourhood prices, no tourist markup</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location-section" id="location">
+  <div class="container">
+    <div class="location-grid">
+      <div class="location-info">
+        <div class="tag-label">Find Us</div>
+        <h2>WE'RE IN<br><span>BANG CHAK</span></h2>
+
+        <div class="info-block">
+          <div class="info-block-label">Address</div>
+          <div class="info-block-value">
+            41 Sukhumvit 60/1 Alley<br>
+            Phra Khanong Tai, Phra Khanong<br>
+            Bangkok 10260
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-block-label">Opening Hours</div>
+          <div class="info-block-value">
+            <div class="hours-grid">
+              <div class="hours-row"><strong>Mon – Fri</strong><br>6:00 AM – 11:00 PM</div>
+              <div class="hours-row"><strong>Sat – Sun</strong><br>6:00 AM – 11:00 PM</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-block-label">Phone</div>
+          <div class="info-block-value">
+            <a href="tel:063325451">063 325 451</a>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="info-block-label">Getting Here</div>
+          <div class="info-block-value" style="font-size:0.88rem; color:rgba(255,255,255,0.5);">
+            BTS On Nut (exit 3) then motorbike taxi or walk ~8 min south on Sukhumvit 60/1.
+          </div>
+        </div>
+
+        <a href="https://maps.app.goo.gl/RAL6txiXvHaaGHFj6" target="_blank" class="btn-primary" style="margin-top:8px;">Open in Google Maps</a>
+      </div>
+
+      <div class="location-map">
+        <div class="map-overlay-tag">Noodle Theory</div>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3876.0745!2d100.6009!3d13.6956!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQxJzQ0LjIiTiAxMDDCsDM2JzAzLjIiRQ!5e0!3m2!1sen!2sth!4v1680000000000!5m2!1sen!2sth&q=41+Sukhumvit+60%2F1+Alley+Phra+Khanong+Bangkok"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Noodle Theory location map">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section class="cta-section" id="contact">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <div class="tag-label" style="border-color:var(--ink-mid); color:var(--ink);">Ready to eat?</div>
+        <h2>COME IN OR<br>CALL AHEAD</h2>
+        <p>No reservations needed — just show up. Or call us to check wait times during busy hours. We're open every day from 6AM to 11PM.</p>
+      </div>
+      <div class="cta-right">
+        <a href="tel:063325451" class="btn-order">Order Now</a>
+        <div class="cta-phone">
+          <div class="cta-phone-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/>
+            </svg>
+          </div>
+          <div class="cta-phone-text">
+            Call us directly
+            <strong>063 325 451</strong>
+          </div>
+        </div>
+        <div style="font-size:0.78rem; color:var(--ink-mid); font-weight:300;">
+          41 Sukhumvit 60/1 Alley, Bang Chak, Bangkok
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    Noodle Theory
+    <small>Bang Chak · Phra Khanong · Bangkok</small>
+  </div>
+  <div class="footer-copy">
+    Open daily 6:00 AM – 11:00 PM<br>
+    <span style="color:rgba(255,255,255,0.15);">© 2025 Noodle Theory</span>
+  </div>
+</footer>
+
+<script>
+/* hamburger */
+const ham = document.getElementById('hamburger');
+const mob = document.getElementById('mobileMenu');
+ham.addEventListener('click', () => mob.classList.toggle('open'));
+function closeMobile() { mob.classList.remove('open'); }
+
+/* menu tabs — simple filter by category */
+const tabs = document.querySelectorAll('.menu-tab');
+const menuData = [
+  { thai:'ก๋วยเตี๋ยวเรือ', eng:'Boat Noodles', desc:'Dark, rich pork or beef broth with herbs, blood tofu, and crispy pork rinds. A Bangkok classic.', price:'55', unit:'THB', badge:'Most Popular', badgeClass:'badge-popular', cat:'soup' },
+  { thai:'ก๋วยเตี๋ยวต้มยำ', eng:'Tom Yum Noodles', desc:'Spicy & sour lemongrass broth, galangal, kaffir lime, and your choice of meat.', price:'75', unit:'THB', badge:'Spicy', badgeClass:'badge-spicy', cat:'soup' },
+  { thai:'เย็นตาโฟ', eng:'Yentafo — Pink Noodle Soup', desc:'Distinctly pink fermented tofu broth, fish balls, squid, and fried tofu puffs.', price:'50', unit:'THB', badge:'House Special', badgeClass:'badge-new', cat:'soup' },
+  { thai:'ข้าวซอย', eng:'Khao Soi', desc:'Northern Thai curry noodle soup. Creamy coconut milk broth, crispy noodles on top.', price:'75', unit:'THB', badge:'Fan Favourite', badgeClass:'badge-popular', cat:'soup' },
+  { thai:'ผัดไทย', eng:'Pad Thai', desc:'Wok-fried flat rice noodles with egg, bean sprouts, spring onion, and ground peanuts.', price:'55', unit:'THB', badge:'Can be Vegan', badgeClass:'badge-veg', cat:'dry' },
+  { thai:'บะหมี่แห้ง', eng:'Dry Egg Noodles', desc:'Tossed egg noodles with seasoned sauce, pork mince, crispy lard, and spring onion.', price:'55', unit:'THB', badge:'', badgeClass:'', cat:'dry' },
+  { thai:'ปีกไก่ทอด', eng:'Fried Chicken Wings', desc:'Golden-fried wings marinated in Thai herbs. Crispy outside, juicy inside.', price:'100', unit:'THB', badge:'Add-on Favourite', badgeClass:'badge-popular', cat:'sides' },
+  { thai:'ข้าวผัด หมู / ไก่', eng:'Fried Rice — Pork or Chicken', desc:'Jasmine rice wok-fried with egg, seasonal vegetables, fish sauce. Small 135฿ / Large 250฿.', price:'135', unit:'THB / 250', badge:'', badgeClass:'', cat:'sides' },
+];
+
+function renderMenu(cat) {
+  const grid = document.getElementById('menuGrid');
+  const items = cat === 'all' ? menuData : menuData.filter(m => m.cat === cat);
+  grid.innerHTML = items.map(m => `
+    <div class="menu-item">
+      <div class="menu-item-info">
+        <div class="menu-item-thai">${m.thai}</div>
+        <div class="menu-item-eng">${m.eng}</div>
+        <div class="menu-item-desc">${m.desc}</div>
+        ${m.badge ? `<span class="menu-item-badge ${m.badgeClass}">${m.badge}</span>` : ''}
+      </div>
+      <div class="menu-item-price">${m.price}<small>${m.unit}</small></div>
+    </div>
+  `).join('');
+}
+
+const catMap = ['soup','dry','sides'];
+tabs.forEach((tab, i) => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderMenu(catMap[i]);
+  });
+});
+
+/* scroll reveal */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.menu-item, .location-info, .press-quote-block, .press-info').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(22px)';
+  el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
